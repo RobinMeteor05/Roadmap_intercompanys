@@ -48,157 +48,134 @@
     min-height: 100vh;
   }
 
-  /* ── HEADER ── */
-  header {
-    background: linear-gradient(135deg, var(--navy) 0%, #0D3580 60%, #1042A0 100%);
-    position: sticky;
-    top: 0;
-    z-index: 100;
-    box-shadow: 0 2px 20px rgba(10,36,99,0.35);
-  }
+  /* ============================================================
+     APP SHELL — sidebar fija + panel principal, sin scroll de página
+     ============================================================ */
+  html, body { height: 100%; overflow: hidden; }
 
-  .header-inner {
-    max-width: 1320px;
-    margin: 0 auto;
-    padding: 0 2rem;
+  .shell { display: flex; height: 100vh; width: 100%; }
+
+  /* ── SIDEBAR ── */
+  .sidebar {
+    flex: 0 0 248px;
+    height: 100vh;
+    background: linear-gradient(180deg, var(--navy) 0%, #0D3280 55%, #1042A0 100%);
+    color: #EAF2FB;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-    height: 52px;
+    flex-direction: column;
+    box-shadow: 2px 0 24px rgba(10,36,99,0.25);
+    z-index: 20;
   }
 
-  .logo-group { display: flex; align-items: center; gap: 13px; }
-
+  .sidebar-brand {
+    display: flex; align-items: center; gap: 12px;
+    padding: 18px 18px 16px; border-bottom: 1px solid rgba(255,255,255,0.08);
+    flex: 0 0 auto;
+  }
   .bi-icon {
-    width: 34px; height: 34px;
+    width: 32px; height: 32px;
     background: rgba(255,255,255,0.12);
     border: 1.5px solid rgba(255,255,255,0.25);
     border-radius: 8px;
     display: flex; align-items: center; justify-content: center;
     flex-shrink: 0;
   }
-  .bi-icon svg { width: 20px; height: 20px; }
-
-  .logo-text { display: flex; flex-direction: column; gap: 1px; }
-
+  .bi-icon svg { width: 18px; height: 18px; }
+  .logo-text { display: flex; flex-direction: column; gap: 1px; min-width: 0; }
   .logo-title {
-    font-family: var(--font-display);
-    font-size: 18.5px; font-weight: 700; color: #fff;
-    letter-spacing: 0.04em; line-height: 1; text-transform: uppercase;
+    font-family: var(--font-display); font-size: 16.5px; font-weight: 700; color: #fff;
+    letter-spacing: 0.03em; line-height: 1.1; text-transform: uppercase;
   }
   .logo-sub {
-    font-family: var(--font-display);
-    font-size: 10.5px; font-weight: 400; color: rgba(255,255,255,0.55);
-    letter-spacing: 0.12em; text-transform: uppercase;
+    font-family: var(--font-display); font-size: 10px; font-weight: 400; color: rgba(255,255,255,0.55);
+    letter-spacing: 0.1em; text-transform: uppercase;
   }
 
-  .header-badge {
-    display: flex; align-items: center; gap: 8px;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.18);
-    border-radius: 20px; padding: 5px 14px;
-  }
   .badge-dot {
     width: 7px; height: 7px; border-radius: 50%;
-    background: var(--accent);
-    box-shadow: 0 0 8px var(--accent);
-    animation: pulse 2s ease-in-out infinite;
+    background: var(--accent); box-shadow: 0 0 8px var(--accent);
+    animation: pulse 2s ease-in-out infinite; flex-shrink: 0;
   }
   @keyframes pulse {
     0%, 100% { opacity: 1; transform: scale(1); }
     50% { opacity: 0.6; transform: scale(0.85); }
   }
+
+  .sidebar-nav { flex: 1 1 auto; padding: 14px 12px; overflow-y: auto; }
+  .nav-label {
+    font-family: var(--font-display); font-size: 10px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.35);
+    padding: 4px 10px 9px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 11px; width: 100%;
+    padding: 10px 12px; border-radius: 9px; margin-bottom: 2px;
+    background: transparent; border: none; color: #B9CEE4;
+    font-family: var(--font-display); font-size: 14px; font-weight: 600; letter-spacing: 0.02em;
+    text-align: left; cursor: pointer; transition: background .18s, color .18s;
+  }
+  .nav-item svg { width: 17px; height: 17px; flex-shrink: 0; }
+  .nav-item:hover { background: rgba(255,255,255,0.07); color: #fff; }
+  .nav-item.active {
+    background: rgba(58,134,255,0.22); color: #fff;
+    box-shadow: inset 0 0 0 1px rgba(58,134,255,0.35);
+  }
+
+  .sidebar-kpis {
+    flex: 0 0 auto; padding: 14px 18px; border-top: 1px solid rgba(255,255,255,0.08);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px;
+  }
+  .kpi-cell { display: flex; flex-direction: column; gap: 1px; }
+  .kpi-num { font-family: var(--font-display); font-size: 19px; font-weight: 700; color: #fff; line-height: 1; }
+  .kpi-num.accent { color: var(--accent); }
+  .kpi-label {
+    font-size: 9.5px; letter-spacing: 0.06em; text-transform: uppercase; color: rgba(255,255,255,0.45);
+  }
+
+  .sidebar-foot {
+    flex: 0 0 auto; padding: 13px 18px 16px; border-top: 1px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column; gap: 10px;
+  }
+  .header-badge {
+    display: flex; align-items: center; gap: 8px; width: fit-content;
+    background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 20px; padding: 5px 12px;
+  }
   .badge-text {
-    font-family: var(--font-display); font-size: 12px; font-weight: 600;
-    color: rgba(255,255,255,0.85); letter-spacing: 0.08em; text-transform: uppercase;
-  }
-
-  /* ── HERO (compactado) ── */
-  .hero {
-    background: linear-gradient(160deg, #0A2463 0%, #0D3280 40%, #0F3D9E 100%);
-    padding: 20px 2rem 18px;
-    position: relative;
-    overflow: hidden;
-  }
-  .hero::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image:
-      radial-gradient(circle at 20% 50%, rgba(58,134,255,0.14) 0%, transparent 50%),
-      radial-gradient(circle at 80% 30%, rgba(0,180,216,0.10) 0%, transparent 40%);
-    animation: heroDrift 14s ease-in-out infinite alternate;
-  }
-  @keyframes heroDrift {
-    from { opacity: .75; transform: scale(1); }
-    to   { opacity: 1;   transform: scale(1.06); }
-  }
-
-  .hero-inner { max-width: 1320px; margin: 0 auto; position: relative; z-index: 1; }
-
-  .hero-eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    background: rgba(58,134,255,0.18);
-    border: 1px solid rgba(58,134,255,0.35);
-    border-radius: 4px; padding: 4px 12px; margin-bottom: 12px;
-  }
-  .hero-eyebrow span {
     font-family: var(--font-display); font-size: 11px; font-weight: 600;
-    color: #90bcff; letter-spacing: 0.14em; text-transform: uppercase;
+    color: rgba(255,255,255,0.85); letter-spacing: 0.06em; text-transform: uppercase;
   }
-  .hero-eyebrow circle { animation: pulse 2s ease-in-out infinite; transform-origin: center; }
-
-  .hero-title {
-    font-family: var(--font-display);
-    font-size: clamp(28px, 4.4vw, 44px);
-    font-weight: 700; color: #fff; line-height: 1.05;
-    letter-spacing: 0.01em; margin-bottom: 10px; text-transform: uppercase;
-  }
-  .hero-title em { font-style: normal; color: var(--accent); }
-
-  .hero-desc {
-    font-size: 14.5px; font-weight: 300; color: rgba(255,255,255,0.65);
-    max-width: 560px; line-height: 1.55; margin-bottom: 15px;
+  .sidebar-foot-text {
+    font-family: var(--font-display); font-size: 10px; color: rgba(255,255,255,0.35);
+    letter-spacing: 0.05em; text-transform: uppercase; line-height: 1.5;
   }
 
-  .stats-bar { display: flex; gap: 20px; flex-wrap: wrap; }
-  .stat-item { display: flex; flex-direction: column; gap: 2px; }
-  .stat-num {
-    font-family: var(--font-display); font-size: 25px; font-weight: 700; color: #fff; line-height: 1;
-  }
-  .stat-label {
-    font-size: 10.5px; font-weight: 400; color: rgba(255,255,255,0.45);
-    letter-spacing: 0.06em; text-transform: uppercase;
-  }
-  .stat-divider { width: 1px; background: rgba(255,255,255,0.12); align-self: stretch; }
+  /* ── MAIN PANEL ── */
+  .main-panel { flex: 1 1 auto; min-width: 0; height: 100vh; display: flex; flex-direction: column; overflow: hidden; }
 
-  .hero-bars {
-    position: absolute; right: 2rem; top: 50%; transform: translateY(-50%);
-    display: flex; align-items: flex-end; gap: 6px; height: 64px; opacity: 0.18;
+  .main-topbar {
+    flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 18px;
+    padding: 16px 26px 13px; background: #fff; border-bottom: 1px solid var(--border);
   }
-  .hero-bar { width: 8px; border-radius: 3px 3px 0 0; background: #fff; animation: barGrow 1.4s ease-out both, barSway 3.4s ease-in-out infinite .6s; }
-  @keyframes barGrow { from { transform: scaleY(0); transform-origin: bottom; } to { transform: scaleY(1); transform-origin: bottom; } }
-  @keyframes barSway { 0%,100%{ opacity:.7; } 50%{ opacity:1; } }
-
-  /* ── MAIN ── */
-  main { max-width: 1320px; margin: 0 auto; padding: .9rem 2rem 2.2rem; }
-
-  /* ── CONTROLS ── */
-  .controls { display: flex; align-items: center; gap: 12px; margin-bottom: .8rem; flex-wrap: wrap; }
-
-  .view-switcher {
-    display: flex; background: #fff; border: 1px solid var(--border); border-radius: 10px;
-    overflow: hidden; box-shadow: 0 1px 4px rgba(10,36,99,0.06);
+  .view-heading h1 {
+    font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--navy);
+    text-transform: uppercase; letter-spacing: 0.01em; line-height: 1.1;
   }
-  .switch-btn {
-    display: flex; align-items: center; gap: 7px; padding: 9px 17px;
-    font-family: var(--font-display); font-size: 13.5px; font-weight: 600;
-    letter-spacing: 0.04em; text-transform: uppercase; color: var(--text-muted);
-    border: none; background: transparent; cursor: pointer; transition: all 0.2s;
-    border-right: 1px solid var(--border);
+  .view-heading p { font-size: 12px; color: var(--text-muted); margin-top: 2px; max-width: 480px; }
+
+  .search-wrap { flex: 0 1 320px; min-width: 200px; position: relative; }
+  .search-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text-muted); }
+  .search-input {
+    width: 100%; height: 40px; padding: 0 16px 0 42px;
+    font-family: var(--font-body); font-size: 13.5px; color: var(--text-main);
+    background: var(--blue-mist); border: 1px solid var(--border); border-radius: 10px; outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s, background .2s;
   }
-  .switch-btn:last-child { border-right: none; }
-  .switch-btn.active { background: var(--blue); color: #fff; box-shadow: inset 0 1px 0 rgba(255,255,255,0.15); }
-  .switch-btn svg { width: 15px; height: 15px; flex-shrink: 0; }
+  .search-input::placeholder { color: var(--text-muted); }
+  .search-input:focus { background: #fff; border-color: var(--blue-light); box-shadow: 0 0 0 3px rgba(58,134,255,0.12); }
+
+
+  .main-scroll { flex: 1 1 auto; overflow-y: auto; padding: 14px 26px 22px; background: var(--blue-mist); }
 
   .search-wrap { flex: 1; min-width: 220px; position: relative; }
   .search-wrap svg { position: absolute; left: 14px; top: 50%; transform: translateY(-50%); width: 16px; height: 16px; color: var(--text-muted); }
@@ -305,176 +282,91 @@
   .empty-state p { font-size: 14px; }
 
   /* ============================================================
-     VISTA · POR GRUPO — Icicle / diagrama de partición
-     Franjas apiladas que llenan el 100% del espacio disponible,
-     sin huecos entre ellas. Clic para hacer drill-down.
+     VISTA · POR GRUPO — Matriz de integración
+     Tabla razón social / tienda × canal e-commerce, agrupada por
+     grupo. Todo el ecosistema visible de un vistazo, sin clics.
      ============================================================ */
-  .grupo-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 14px; flex-wrap: wrap; margin-bottom: 10px; }
-
-  .grupo-tabs { display: flex; gap: 8px; flex-wrap: wrap; }
-  .grupo-tab {
-    display: flex; align-items: center; gap: 8px;
-    padding: 7px 15px 7px 11px; border-radius: 9px; border: 1px solid var(--border);
-    background: #fff; font-family: var(--font-display); font-size: 13px; font-weight: 600;
-    letter-spacing: 0.03em; text-transform: uppercase; color: var(--text-muted);
-    cursor: pointer; transition: all .2s; box-shadow: 0 1px 4px rgba(10,36,99,.05);
-  }
-  .grupo-tab .swatch { width: 9px; height: 9px; border-radius: 3px; flex-shrink: 0; }
-  .grupo-tab:hover { border-color: var(--blue-light); color: var(--navy); }
-  .grupo-tab.active { background: var(--blue); color: #fff; border-color: var(--blue); box-shadow: 0 4px 14px rgba(23,87,194,.28); }
-  .grupo-tab.active .swatch { box-shadow: 0 0 0 2px rgba(255,255,255,.5); }
-
-  .map-legend-tag {
-    display: flex; align-items: center; gap: 7px;
-    font-family: var(--font-display); font-size: 11px; font-weight: 600;
-    letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
-  }
-  .map-legend-tag .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 6px var(--accent); animation: pulse 2s ease-in-out infinite; }
-
-  .map-summary {
-    display: flex; gap: 22px; flex-wrap: wrap; margin-bottom: 10px; padding: 10px 18px;
-    background: #fff; border: 1px solid var(--border); border-radius: 12px; box-shadow: 0 2px 12px rgba(10,36,99,.06);
-  }
-  .map-summary .stat-item .stat-num { color: var(--navy); font-size: 21px; }
-  .map-summary .stat-item .stat-label { color: var(--text-muted); }
-
-  /* migaja de pan (drill-down) */
-  .icicle-crumb {
-    display: flex; align-items: center; flex-wrap: wrap; gap: 5px;
-    font-family: var(--font-display); font-size: 13px; font-weight: 600;
-    letter-spacing: .02em; text-transform: uppercase; color: var(--text-muted);
-    margin-bottom: 8px; padding: 0 2px;
-  }
-  .icicle-crumb .crumb-item {
-    cursor: pointer; padding: 3px 9px; border-radius: 6px; transition: background .15s, color .15s;
-  }
-  .icicle-crumb .crumb-item:hover { background: var(--blue-pale); color: var(--navy); }
-  .icicle-crumb .crumb-item.current { color: var(--navy); cursor: default; }
-  .icicle-crumb .crumb-item.current:hover { background: none; }
-  .icicle-crumb .crumb-sep { color: var(--border); font-weight: 400; }
-
-  .icicle-frame {
+  .matrix-frame {
     background: #fff; border: 1px solid var(--border); border-radius: 14px;
-    box-shadow: 0 2px 12px rgba(10,36,99,.06); padding: 8px;
+    box-shadow: 0 2px 12px rgba(10,36,99,.06); overflow: hidden;
   }
 
-  .icicle-headers { display: flex; gap: 2px; padding: 0 2px 6px; }
-  .icicle-headers .col-label {
-    flex: 1 1 0; font-family: var(--font-display); font-size: 10px; font-weight: 600;
-    letter-spacing: .12em; text-transform: uppercase; color: var(--text-muted);
+  .integration-matrix { width: 100%; border-collapse: collapse; font-size: 13px; }
+
+  .integration-matrix thead th {
+    position: sticky; top: 0; z-index: 2;
+    background: #F5F8FF; border-bottom: 1px solid var(--border);
+    padding: 10px 14px; text-align: left;
+    font-family: var(--font-display); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .integration-matrix .th-channel { text-align: center; }
+  .th-ch-inner { display: flex; align-items: center; justify-content: center; gap: 6px; }
+  .th-ch-inner img, .th-ch-inner span.fallback { width: 16px; height: 16px; object-fit: contain; }
+
+  .integration-matrix tbody td {
+    padding: 8px 14px; border-bottom: 1px solid rgba(210,223,255,0.5);
+    color: var(--text-main); vertical-align: middle;
   }
 
-  .icicle-body { display: flex; gap: 2px; width: 100%; }
+  .group-row td {
+    background: var(--blue-mist); padding: 9px 14px;
+    border-bottom: 1px solid var(--border); border-top: 1px solid var(--border);
+  }
+  .group-row:first-child td { border-top: none; }
+  .group-dot { display: inline-block; width: 8px; height: 8px; border-radius: 3px; margin-right: 9px; vertical-align: middle; }
+  .group-name {
+    font-family: var(--font-display); font-weight: 700; font-size: 13.5px;
+    letter-spacing: 0.03em; text-transform: uppercase; color: var(--navy); vertical-align: middle;
+  }
+  .group-meta { font-size: 11.5px; color: var(--text-muted); margin-left: 12px; vertical-align: middle; }
 
-  .icicle-col { flex: 1 1 0; min-width: 0; display: flex; flex-direction: column; gap: 2px; position: relative; }
+  .tienda-row { animation: cardIn .3s cubic-bezier(.22,.61,.36,1) both; transition: opacity .2s, background .15s; }
+  .tienda-row:hover { background: var(--blue-pale); }
 
-  /* separador de flujo animado entre columnas */
-  .icicle-col:not(:last-child)::after {
-    content: ''; position: absolute; top: 0; right: -2px; bottom: 0; width: 2px;
-    background: linear-gradient(180deg, transparent, var(--blue-light), transparent);
-    background-size: 100% 46px;
-    animation: flowSweep 2.6s linear infinite;
-    opacity: .55;
-  }
-  @keyframes flowSweep { to { background-position: 0 -184px; } }
+  .razon-cell { font-weight: 600; color: var(--navy); border-right: 1px solid rgba(210,223,255,0.5); }
+  .tienda-cell { color: var(--blue); font-size: 12.5px; }
 
-  .icicle-band {
-    position: relative; border-radius: 6px; overflow: hidden;
-    display: flex; align-items: center; padding: 0 12px;
-    font-size: 12.5px; cursor: default; user-select: none;
-    transition: opacity .2s, filter .2s, transform .15s;
-    animation: cardIn .3s cubic-bezier(.22,.61,.36,1) both;
+  .cell-yes, .cell-no { text-align: center; width: 46px; }
+  .cell-dot {
+    display: inline-block; width: 11px; height: 11px; border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(23,87,194,.08);
   }
-  .icicle-band .band-label { flex: 1 1 auto; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .icicle-band .band-count { flex: 0 0 auto; font-size: 10px; font-weight: 700; opacity: .75; margin-left: 8px; }
+  .cell-no { color: var(--border); font-weight: 300; }
 
-  .icicle-col.col-grupo .icicle-band {
-    background: linear-gradient(135deg, var(--navy), var(--blue));
-    color: #fff; font-family: var(--font-display); font-weight: 700;
-    letter-spacing: .03em; text-transform: uppercase; cursor: pointer;
-  }
-  .icicle-col.col-razon .icicle-band {
-    background: var(--blue-pale); color: var(--navy); font-weight: 600;
-    border: 1px solid rgba(23,87,194,.14); cursor: pointer;
-  }
-  .icicle-col.col-razon .icicle-band:hover { background: #DEEAFF; }
-  .icicle-col.col-tienda .icicle-band {
-    background: #F3F7FF; color: var(--blue); font-weight: 500;
-    border: 1px dashed rgba(23,87,194,.3); cursor: pointer;
-  }
-  .icicle-col.col-tienda .icicle-band:hover { background: var(--blue-pale); }
-  .icicle-col.col-canal .icicle-band {
-    color: #fff; font-family: var(--font-display); font-weight: 700; letter-spacing: .03em; text-transform: uppercase;
-    font-size: 11.5px; justify-content: center; text-align: center;
-  }
+  .integration-matrix.dimmed .tienda-row { opacity: .25; }
+  .integration-matrix.dimmed .tienda-row.match { opacity: 1; background: #FFF7E0; }
 
-  .icicle-band.drillable::after {
-    content: '›'; flex: 0 0 auto; font-family: var(--font-display); font-weight: 700;
-    opacity: .5; margin-left: 6px; font-size: 15px; line-height: 1;
-  }
-
-  .icicle-body.dimmed .icicle-band { opacity: .25; filter: saturate(.5); }
-  .icicle-body.dimmed .icicle-band.in-path { opacity: 1; filter: none; }
-  .icicle-band.in-path { transform: scale(1.015); box-shadow: 0 3px 10px rgba(10,36,99,.16); }
-
-  /* tooltip nativo (sin librerías) */
-  [data-tip] { position: relative; }
-  [data-tip]::after {
-    content: attr(data-tip);
-    position: absolute; left: 50%; bottom: calc(100% + 9px); transform: translateX(-50%) translateY(4px);
-    background: var(--navy); color: #fff; font-family: var(--font-body); font-size: 11.5px; font-weight: 400;
-    line-height: 1.5; white-space: pre-line; text-align: left; padding: 9px 11px; width: max-content; max-width: 220px;
-    border-radius: 8px; box-shadow: 0 10px 24px rgba(10,36,99,.35); opacity: 0; pointer-events: none;
-    z-index: 60; transition: opacity .15s, transform .15s;
-  }
-  [data-tip]::before {
-    content: ''; position: absolute; left: 50%; bottom: calc(100% + 3px); transform: translateX(-50%);
-    border: 6px solid transparent; border-top-color: var(--navy); opacity: 0; pointer-events: none;
-    z-index: 60; transition: opacity .15s;
-  }
-  [data-tip]:hover::after { opacity: 1; transform: translateX(-50%) translateY(0); }
-  [data-tip]:hover::before { opacity: 1; }
-
-
-  /* ── FOOTER ── */
-  footer { background: var(--navy); padding: 11px 2rem; text-align: center; }
-  .footer-inner {
-    max-width: 1320px; margin: 0 auto; display: flex; align-items: center;
-    justify-content: space-between; gap: 12px; flex-wrap: wrap;
-  }
-  .footer-text {
-    font-family: var(--font-display); font-size: 12px; color: rgba(255,255,255,0.35);
-    letter-spacing: 0.06em; text-transform: uppercase;
-  }
-  .footer-tag {
-    display: flex; align-items: center; gap: 7px; background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 4px 12px;
-  }
-  .footer-tag-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
-  .footer-tag span {
-    font-family: var(--font-display); font-size: 11px; font-weight: 600;
-    color: rgba(255,255,255,0.55); letter-spacing: 0.1em; text-transform: uppercase;
-  }
 
   /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    html, body { overflow: auto; height: auto; }
+    .shell { flex-direction: column; height: auto; min-height: 100vh; }
+    .sidebar { flex-direction: row; align-items: center; width: 100%; height: auto; box-shadow: 0 2px 20px rgba(10,36,99,.25); }
+    .sidebar-brand { border-bottom: none; border-right: 1px solid rgba(255,255,255,.08); flex: 0 0 auto; }
+    .sidebar-nav { flex: 1 1 auto; display: flex; align-items: center; padding: 8px 10px; overflow-x: auto; }
+    .nav-label { display: none; }
+    .nav-item { flex-direction: row; white-space: nowrap; margin-bottom: 0; margin-right: 4px; }
+    .sidebar-kpis, .sidebar-foot { display: none; }
+    .main-panel { height: auto; overflow: visible; }
+    .main-scroll { overflow-y: visible; }
+  }
+
   @media (max-width: 600px) {
-    .hero-bars { display: none; }
-    .stats-bar { gap: 16px; }
     .platform-grid, .company-grid { grid-template-columns: 1fr; }
-    .header-badge { display: none; }
-    .controls { flex-direction: column; align-items: stretch; }
-    .view-switcher { width: 100%; }
-    .switch-btn { flex: 1; justify-content: center; padding-left: 8px; padding-right: 8px; }
+    .main-topbar { flex-direction: column; align-items: stretch; }
+    .search-wrap { flex: 1 1 auto; }
     .map-summary { gap: 16px; }
   }
 </style>
 </head>
 <body>
+<div class="shell" id="shell">
 
-<!-- HEADER -->
-<header>
-  <div class="header-inner">
-    <div class="logo-group">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-brand">
       <div class="bi-icon">
         <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="3" y="12" width="4" height="9" rx="1" fill="rgba(255,255,255,0.9)"/>
@@ -487,129 +379,88 @@
         <div class="logo-sub">Integración E-Commerce</div>
       </div>
     </div>
-    <div class="header-badge">
-      <div class="badge-dot"></div>
-      <div class="badge-text">Datos actualizados</div>
-    </div>
-  </div>
-</header>
 
-<!-- HERO -->
-<div class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">
-      <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
-        <circle cx="5" cy="5" r="5" fill="#00B4D8"/>
-      </svg>
-      <span>Área de Business Intelligence</span>
-    </div>
-    <h1 class="hero-title">Mapa de integración<br><em>E-Commerce</em></h1>
-    <p class="hero-desc">
-      Visualización centralizada de las empresas que operan en cada plataforma de comercio electrónico, sus tiendas online y los grupos empresariales a los que pertenecen.
-    </p>
-    <div class="stats-bar">
-      <div class="stat-item">
-        <span class="stat-num" id="stat-ec">–</span>
-        <span class="stat-label">Plataformas</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num" id="stat-companies">–</span>
-        <span class="stat-label">Razones sociales</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num" id="stat-stores">–</span>
-        <span class="stat-label">Tiendas online</span>
-      </div>
-      <div class="stat-divider"></div>
-      <div class="stat-item">
-        <span class="stat-num" id="stat-grupos">–</span>
-        <span class="stat-label">Grupos</span>
-      </div>
-    </div>
-  </div>
-  <div class="hero-bars" aria-hidden="true">
-    <div class="hero-bar" style="height:30%;animation-delay:0s"></div>
-    <div class="hero-bar" style="height:55%;animation-delay:.08s"></div>
-    <div class="hero-bar" style="height:80%;animation-delay:.16s"></div>
-    <div class="hero-bar" style="height:45%;animation-delay:.24s"></div>
-    <div class="hero-bar" style="height:95%;animation-delay:.32s"></div>
-    <div class="hero-bar" style="height:65%;animation-delay:.40s"></div>
-    <div class="hero-bar" style="height:40%;animation-delay:.48s"></div>
-    <div class="hero-bar" style="height:75%;animation-delay:.56s"></div>
-  </div>
-</div>
-
-<!-- MAIN -->
-<main>
-  <div class="controls">
-    <div class="view-switcher" role="tablist">
-      <button class="switch-btn active" id="btn-platform" role="tab" aria-selected="true" onclick="switchView('platform')">
+    <nav class="sidebar-nav" role="tablist">
+      <div class="nav-label">Vistas</div>
+      <button class="nav-item active" id="btn-platform" role="tab" aria-selected="true" onclick="switchView('platform')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
           <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
         </svg>
-        Por e-commerce
+        <span>Por e-commerce</span>
       </button>
-      <button class="switch-btn" id="btn-company" role="tab" aria-selected="false" onclick="switchView('company')">
+      <button class="nav-item" id="btn-company" role="tab" aria-selected="false" onclick="switchView('company')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
           <polyline points="9 22 9 12 15 12 15 22"/>
         </svg>
-        Por compañía
+        <span>Por compañía</span>
       </button>
-      <button class="switch-btn" id="btn-grupo" role="tab" aria-selected="false" onclick="switchView('grupo')">
+      <button class="nav-item" id="btn-grupo" role="tab" aria-selected="false" onclick="switchView('grupo')">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
           <circle cx="5" cy="12" r="2.4"/><circle cx="19" cy="5" r="2.4"/><circle cx="19" cy="19" r="2.4"/>
           <path d="M7.1 11l9.8-5.2M7.1 13l9.8 5.2"/>
         </svg>
-        Por grupo
+        <span>Por grupo</span>
       </button>
+    </nav>
+
+    <div class="sidebar-kpis">
+      <div class="kpi-cell"><span class="kpi-num" id="stat-ec">–</span><span class="kpi-label">Plataformas</span></div>
+      <div class="kpi-cell"><span class="kpi-num" id="stat-companies">–</span><span class="kpi-label">Razones sociales</span></div>
+      <div class="kpi-cell"><span class="kpi-num" id="stat-stores">–</span><span class="kpi-label">Tiendas online</span></div>
+      <div class="kpi-cell"><span class="kpi-num accent" id="stat-grupos">–</span><span class="kpi-label">Grupos</span></div>
     </div>
-    <div class="search-wrap">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-      </svg>
-      <input class="search-input" type="text" id="search" placeholder="Buscar empresa, tienda, plataforma o grupo…" oninput="handleSearch(this.value)" aria-label="Buscar">
+
+    <div class="sidebar-foot">
+      <div class="header-badge">
+        <div class="badge-dot"></div>
+        <div class="badge-text">Datos actualizados</div>
+      </div>
+      <div class="sidebar-foot-text">© 2025 · Fuente: Business Intelligence</div>
+    </div>
+  </aside>
+
+  <!-- MAIN PANEL -->
+  <div class="main-panel">
+
+    <div class="main-topbar">
+      <div class="view-heading">
+        <h1 id="view-title">Por e-commerce</h1>
+        <p id="view-desc">Empresas registradas en cada plataforma de comercio electrónico.</p>
+      </div>
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+        <input class="search-input" type="text" id="search" placeholder="Buscar empresa, tienda, plataforma o grupo…" oninput="handleSearch(this.value)" aria-label="Buscar">
+      </div>
+    </div>
+
+    <div class="main-scroll">
+      <!-- VIEW: PLATFORM -->
+      <div class="view active" id="view-platform" role="tabpanel">
+        <div class="platform-grid" id="platform-grid"></div>
+      </div>
+
+      <!-- VIEW: COMPANY -->
+      <div class="view" id="view-company" role="tabpanel">
+        <div class="company-grid" id="company-grid"></div>
+      </div>
+
+      <!-- VIEW: GRUPO — Matriz de Integración -->
+      <div class="view" id="view-grupo" role="tabpanel">
+        <div class="matrix-frame">
+          <table class="integration-matrix" id="integration-matrix">
+            <thead id="matrix-head"></thead>
+            <tbody id="matrix-body"></tbody>
+          </table>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- VIEW: PLATFORM -->
-  <div class="view active" id="view-platform" role="tabpanel">
-    <div class="platform-grid" id="platform-grid"></div>
-  </div>
-
-  <!-- VIEW: COMPANY -->
-  <div class="view" id="view-company" role="tabpanel">
-    <div class="company-grid" id="company-grid"></div>
-  </div>
-
-  <!-- VIEW: GRUPO — Icicle de Integración -->
-  <div class="view" id="view-grupo" role="tabpanel">
-    <div class="grupo-toolbar">
-      <div class="grupo-tabs" id="grupo-tabs"></div>
-      <div class="map-legend-tag"><span class="dot"></span> Mapa generado por Business Intelligence</div>
-    </div>
-    <div class="map-summary" id="map-summary"></div>
-    <div class="icicle-crumb" id="icicle-crumb"></div>
-    <div class="icicle-frame">
-      <div class="icicle-headers" id="icicle-headers"></div>
-      <div class="icicle-body" id="icicle-body"></div>
-    </div>
-  </div>
-</main>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-inner">
-    <div class="footer-text">© 2025 Business Intelligence · Datos de integración E-Commerce</div>
-    <div class="footer-tag">
-      <div class="footer-tag-dot"></div>
-      <span>Fuente: Business Intelligence</span>
-    </div>
-  </div>
-</footer>
+</div>
 
 <script>
 /* ============================================================
@@ -619,12 +470,12 @@
    ============================================================ */
 
 const LOGOS = {
-  "Mercado Libre": "https://http2.mlstatic.com/storage/pog-cm-admin/calm-assets/mercado-libre-thumbnail--1538x1510--991f0a66.webp",
-  "Amazon":        "https://static.vecteezy.com/system/resources/thumbnails/019/766/240/small/amazon-logo-amazon-icon-transparent-free-png.png",
-  "Walmart":       "https://cdn.mos.cms.futurecdn.net/5StAbRHLA4ZdyzQZVivm2c.jpg",
-  "Coppel":        "https://media.fashionnetwork.com/cdn-cgi/image/fit=contain,width=1000,height=1000,format=auto/m/07db/5d1d/baf9/db8f/6117/89fc/3c9d/b9a3/c5f9/7780/7780.jpg",
-  "Liverpool":     "https://gcp-na-images.contentstack.com/v3/assets/blt339516d00dd80f86/blt07b6231a0224df6f/686da1846414b29800a13955/Liverpool_opengraph.png?branch=pro",
-  "TikTok Shop":   "https://cdn.milenio.com/uploads/media/2025/11/04/tiktok-shop-mejorara-experiencia-compra.jpeg"
+  "Mercado Libre": "https://http2.mlstatic.com/frontend-assets/ml-web-navigation/ui-navigation/6.6.92/mercadolibre/logo__large_plus@2x.png",
+  "Amazon":        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/320px-Amazon_logo.svg.png",
+  "Walmart":       "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Walmart_Spark.svg/160px-Walmart_Spark.svg.png",
+  "Coppel":        "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2e/Coppel_logo.svg/320px-Coppel_logo.svg.png",
+  "Liverpool":     "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Liverpool_department_stores_logo.svg/320px-Liverpool_department_stores_logo.svg.png",
+  "TikTok Shop":   "https://sf16-website-login.neutral.ttwstatic.com/obj/tiktok_web_login_static/tiktok/webapp/main/webapp-desktop/8152cef44549.png"
 };
 
 const LOGO_FALLBACK = {
@@ -868,256 +719,111 @@ function renderCompany(query) {
 }
 
 /* ============================================================
-   VISTA · POR GRUPO — Icicle / diagrama de partición
-   4 columnas (Grupo → Razón Social → Tienda → E-commerce) que
-   llenan el 100% del espacio disponible, sin huecos. Clic para
-   hacer drill-down; la migaja de pan permite regresar.
+   VISTA · POR GRUPO — Matriz de integración
+   Tabla razón social / tienda × canal, agrupada por grupo.
+   Toda la relación completa visible de un vistazo, sin clics
+   ni pasos intermedios — pensada para lectura inmediata.
    ============================================================ */
 
-let currentGrupo = null;
-let mapFilter = { razon: null, tiendaKey: null };
 let searchQuery = '';
-const GROUP_LEAVES = {};
 
-function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 function escAttr(s) { return String(s).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;'); }
-function escJs(s) { return String(s).replace(/\\/g, '\\\\').replace(/'/g, "\\'"); }
 
-function renderGrupoTabs() {
-  const wrap = document.getElementById('grupo-tabs');
-  const names = Object.keys(GROUP_MODEL.grupos).sort();
-  if (!currentGrupo) currentGrupo = names[0];
-
-  wrap.innerHTML = names.map(name => {
-    const color = GROUP_COLOR[name] || 'var(--blue)';
-    const active = name === currentGrupo ? 'active' : '';
-    return `<button class="grupo-tab ${active}" onclick="selectGrupo('${escJs(name)}')">
-      <span class="swatch" style="background:${color}"></span>${name}
-    </button>`;
-  }).join('');
-}
-
-function selectGrupo(name) {
-  currentGrupo = name;
-  mapFilter = { razon: null, tiendaKey: null };
-  renderGrupoTabs();
-  renderIcicle();
-}
-
-function renderGrupoSummary() {
-  const g = GROUP_MODEL.grupos[currentGrupo];
-  const host = document.getElementById('map-summary');
-  if (!g) { host.innerHTML = ''; return; }
-  host.innerHTML = `
-    <div class="stat-item"><span class="stat-num">${g.razones.size}</span><span class="stat-label">Razones sociales</span></div>
-    <div class="stat-item"><span class="stat-num">${g.tiendas.size}</span><span class="stat-label">Tiendas online</span></div>
-    <div class="stat-item"><span class="stat-num">${g.canales.size}</span><span class="stat-label">E-commerce</span></div>
-    <div class="stat-item"><span class="stat-num">${g.integraciones}</span><span class="stat-label">Integraciones</span></div>
-  `;
-}
-
-/* hoja = una fila (razón, tienda, canal) — la unidad mínima del icicle */
-function computeLeaves(grupoName) {
-  if (GROUP_LEAVES[grupoName]) return GROUP_LEAVES[grupoName];
+/* filas (tiendas) de un grupo, ordenadas y con el span de cada razón social para el rowspan */
+function buildGroupRows(grupoName) {
   const { razonIndex, tiendaIndex } = GROUP_MODEL;
   const g = GROUP_MODEL.grupos[grupoName];
-  if (!g) return (GROUP_LEAVES[grupoName] = []);
+  if (!g) return [];
 
   const razones = [...g.razones].sort();
-  const leaves = [];
+  const rows = [];
   razones.forEach(razon => {
     const tiendaKeys = [...razonIndex[razon].tiendas].filter(k => tiendaIndex[k].grupo === grupoName).sort();
-    tiendaKeys.forEach(tKey => {
+    tiendaKeys.forEach((tKey, i) => {
       const t = tiendaIndex[tKey];
-      const canales = [...t.canales].sort();
-      canales.forEach(canal => leaves.push({ razon, tiendaKey: tKey, tienda: t.tienda, canal }));
+      rows.push({ razon, tienda: t.tienda, tiendaKey: tKey, canales: t.canales, isFirst: i === 0, span: tiendaKeys.length });
     });
   });
-  return (GROUP_LEAVES[grupoName] = leaves);
+  return rows;
 }
 
-function getVisibleLeaves() {
-  return computeLeaves(currentGrupo).filter(l =>
-    (!mapFilter.razon || l.razon === mapFilter.razon) &&
-    (!mapFilter.tiendaKey || l.tiendaKey === mapFilter.tiendaKey)
-  );
-}
+function renderMatrix() {
+  const channels = PLATFORMS.map(p => p.name);
+  const groups = Object.keys(GROUP_MODEL.grupos).sort();
 
-/* agrupa filas consecutivas que comparten la misma llave en una franja */
-function groupConsecutive(leaves, keyFn, labelFn) {
-  const bands = [];
-  leaves.forEach((leaf, i) => {
-    const k = keyFn(leaf);
-    const last = bands[bands.length - 1];
-    if (last && last.key === k) { last.end = i; last.count++; }
-    else bands.push({ key: k, label: labelFn(leaf), start: i, end: i, count: 1 });
+  const headHtml = `<tr>
+    <th class="th-razon">Razón Social</th>
+    <th class="th-tienda">Tienda Online</th>
+    ${channels.map(ch => `<th class="th-channel"><div class="th-ch-inner">${logoImg(ch, 16)}<span>${ch}</span></div></th>`).join('')}
+  </tr>`;
+
+  let bodyHtml = '';
+  groups.forEach(g => {
+    const gm = GROUP_MODEL.grupos[g];
+    const color = GROUP_COLOR[g] || 'var(--blue)';
+    bodyHtml += `<tr class="group-row">
+      <td colspan="${2 + channels.length}">
+        <span class="group-dot" style="background:${color}"></span>
+        <span class="group-name">${g}</span>
+        <span class="group-meta">${gm.razones.size} razones sociales · ${gm.tiendas.size} tiendas · ${gm.canales.size} canales</span>
+      </td>
+    </tr>`;
+
+    buildGroupRows(g).forEach(r => {
+      const searchText = (r.razon + ' ' + r.tienda + ' ' + [...r.canales].join(' ')).toLowerCase();
+      bodyHtml += `<tr class="tienda-row" data-search="${escAttr(searchText)}">`;
+      if (r.isFirst) bodyHtml += `<td class="razon-cell" rowspan="${r.span}">${r.razon}</td>`;
+      bodyHtml += `<td class="tienda-cell">${r.tienda}</td>`;
+      channels.forEach(ch => {
+        if (r.canales.has(ch)) {
+          const accent = CHANNEL_ACCENT[ch] || 'var(--blue)';
+          bodyHtml += `<td class="cell-yes"><span class="cell-dot" style="background:${accent}"></span></td>`;
+        } else {
+          bodyHtml += `<td class="cell-no">–</td>`;
+        }
+      });
+      bodyHtml += `</tr>`;
+    });
   });
-  return bands;
+
+  document.getElementById('matrix-head').innerHTML = headHtml;
+  document.getElementById('matrix-body').innerHTML = bodyHtml;
+
+  if (searchQuery) filterMatrixHighlight(searchQuery);
 }
 
-function tipText(kind, payload, extra) {
-  if (kind === 'grupo') return `GRUPO\n${payload}\n\n${GROUP_MODEL.grupos[payload].razones.size} razones sociales`;
-  if (kind === 'razon') return `RAZÓN SOCIAL\n${payload}\n\nGRUPO\n${currentGrupo}`;
-  if (kind === 'tienda') return `TIENDA ONLINE\n${payload.label}\n\nRAZÓN SOCIAL\n${extra}\n\nGRUPO\n${currentGrupo}`;
-  if (kind === 'canal') return `E-COMMERCE\n${payload.canal}\n\nTIENDA\n${payload.tienda}\n\nRAZÓN SOCIAL\n${payload.razon}`;
-  return '';
-}
+function filterMatrixHighlight(query) {
+  searchQuery = (query || '').trim();
+  const table = document.getElementById('integration-matrix');
+  if (!table) return;
+  const rows = [...table.querySelectorAll('.tienda-row')];
 
-function renderBreadcrumb() {
-  const host = document.getElementById('icicle-crumb');
-  const parts = [`<span class="crumb-item ${!mapFilter.razon ? 'current' : ''}" onclick="resetFilter()">${currentGrupo}</span>`];
-  if (mapFilter.razon) {
-    parts.push(`<span class="crumb-sep">›</span>`);
-    parts.push(`<span class="crumb-item ${!mapFilter.tiendaKey ? 'current' : ''}" onclick="drillRazon('${escJs(mapFilter.razon)}')">${mapFilter.razon}</span>`);
-  }
-  if (mapFilter.tiendaKey) {
-    const t = GROUP_MODEL.tiendaIndex[mapFilter.tiendaKey];
-    parts.push(`<span class="crumb-sep">›</span>`);
-    parts.push(`<span class="crumb-item current">${t ? t.tienda : ''}</span>`);
-  }
-  host.innerHTML = parts.join('');
-}
-
-function resetFilter() { mapFilter = { razon: null, tiendaKey: null }; renderIcicle(); }
-function drillRazon(razon) { mapFilter = { razon, tiendaKey: null }; renderIcicle(); }
-function drillTienda(tiendaKey) {
-  const t = GROUP_MODEL.tiendaIndex[tiendaKey];
-  mapFilter = { razon: t.razon, tiendaKey };
-  renderIcicle();
-}
-
-function renderIcicle() {
-  renderGrupoSummary();
-  renderBreadcrumb();
-
-  const leaves = getVisibleLeaves();
-  const headersHost = document.getElementById('icicle-headers');
-  const bodyHost = document.getElementById('icicle-body');
-
-  if (!leaves.length) {
-    headersHost.innerHTML = '';
-    bodyHost.innerHTML = `<div class="empty-state">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
-      </svg>
-      <p>Sin integraciones para este grupo</p>
-    </div>`;
+  if (!searchQuery) {
+    table.classList.remove('dimmed');
+    rows.forEach(r => r.classList.remove('match'));
     return;
   }
 
-  headersHost.innerHTML = `
-    <div class="col-label">GRUPO</div>
-    <div class="col-label">RAZÓN SOCIAL</div>
-    <div class="col-label">TIENDA ONLINE</div>
-    <div class="col-label">E-COMMERCE</div>`;
-
-  const rowH = clamp(Math.round(240 / leaves.length), 30, 64);
-  const razonBands = groupConsecutive(leaves, l => l.razon, l => l.razon);
-  const tiendaBands = groupConsecutive(leaves, l => l.tiendaKey, l => l.tienda);
-
-  const grupoHtml = `<div class="icicle-band drillable" data-search="${escAttr(currentGrupo.toLowerCase())}"
-    data-tip="${escAttr(tipText('grupo', currentGrupo))}" onclick="resetFilter()"
-    style="height:${rowH * leaves.length}px">
-    <span class="band-label">${currentGrupo}</span>
-  </div>`;
-
-  const razonHtml = razonBands.map(b => {
-    const h = (b.end - b.start + 1) * rowH;
-    return `<div class="icicle-band drillable" data-razon="${escAttr(b.key)}" data-search="${escAttr(b.key.toLowerCase())}"
-      data-tip="${escAttr(tipText('razon', b.key))}" onclick="drillRazon('${escJs(b.key)}')"
-      onmouseenter="hoverBand(this)" onmouseleave="unhoverBand()" style="height:${h}px">
-      <span class="band-label">${b.key}</span><span class="band-count">${b.count}</span>
-    </div>`;
-  }).join('');
-
-  const tiendaHtml = tiendaBands.map(b => {
-    const h = (b.end - b.start + 1) * rowH;
-    const razon = leaves[b.start].razon;
-    return `<div class="icicle-band drillable" data-razon="${escAttr(razon)}" data-tienda="${escAttr(b.key)}"
-      data-search="${escAttr((b.label + ' ' + razon).toLowerCase())}"
-      data-tip="${escAttr(tipText('tienda', b, razon))}" onclick="drillTienda('${escJs(b.key)}')"
-      onmouseenter="hoverBand(this)" onmouseleave="unhoverBand()" style="height:${h}px">
-      <span class="band-label">${b.label}</span><span class="band-count">${b.count}</span>
-    </div>`;
-  }).join('');
-
-  const canalHtml = leaves.map(l => {
-    const color = CHANNEL_ACCENT[l.canal] || 'var(--blue)';
-    return `<div class="icicle-band" data-razon="${escAttr(l.razon)}" data-tienda="${escAttr(l.tiendaKey)}"
-      data-search="${escAttr((l.canal + ' ' + l.tienda + ' ' + l.razon).toLowerCase())}"
-      data-tip="${escAttr(tipText('canal', l))}"
-      onmouseenter="hoverBand(this)" onmouseleave="unhoverBand()"
-      style="height:${rowH}px; background:${color};">
-      <span class="band-label">${l.canal}</span>
-    </div>`;
-  }).join('');
-
-  bodyHost.innerHTML = `
-    <div class="icicle-col col-grupo">${grupoHtml}</div>
-    <div class="icicle-col col-razon">${razonHtml}</div>
-    <div class="icicle-col col-tienda">${tiendaHtml}</div>
-    <div class="icicle-col col-canal">${canalHtml}</div>
-  `;
-
-  if (searchQuery) filterMapHighlight(searchQuery);
-}
-
-/* resalta la franja bajo el cursor junto con su rama completa (padres + hijos) */
-function relatedMatch(band, razon, tiendaKey) {
-  if (band.parentElement.classList.contains('col-grupo')) return true;
-  if (band.dataset.razon !== razon) return false;
-  if (!tiendaKey) return true;
-  return !band.dataset.tienda || band.dataset.tienda === tiendaKey;
-}
-
-function applyBandHighlight(razon, tiendaKey) {
-  const body = document.getElementById('icicle-body');
-  if (!body) return;
-  body.classList.add('dimmed');
-  body.querySelectorAll('.icicle-band').forEach(el => {
-    el.classList.toggle('in-path', relatedMatch(el, razon, tiendaKey));
-  });
-}
-
-function clearBandHighlight() {
-  const body = document.getElementById('icicle-body');
-  if (!body) return;
-  body.classList.remove('dimmed');
-  body.querySelectorAll('.icicle-band').forEach(el => el.classList.remove('in-path'));
-}
-
-function hoverBand(el) {
-  if (searchQuery) return;
-  applyBandHighlight(el.dataset.razon, el.dataset.tienda);
-}
-function unhoverBand() {
-  if (searchQuery) return;
-  clearBandHighlight();
-}
-
-function filterMapHighlight(query) {
-  searchQuery = (query || '').trim();
-  const body = document.getElementById('icicle-body');
-  if (!body) return;
-  if (!searchQuery) { clearBandHighlight(); return; }
-
   const q = searchQuery.toLowerCase();
-  const allBands = [...body.querySelectorAll('.icicle-band')];
-  const matched = allBands.filter(el => (el.dataset.search || '').includes(q));
-
-  if (!matched.length) { clearBandHighlight(); return; }
-
-  body.classList.add('dimmed');
-  allBands.forEach(el => el.classList.remove('in-path'));
-  matched.forEach(m => {
-    allBands.forEach(b => { if (relatedMatch(b, m.dataset.razon, m.dataset.tienda)) b.classList.add('in-path'); });
+  let any = false;
+  rows.forEach(r => {
+    const match = (r.dataset.search || '').includes(q);
+    r.classList.toggle('match', match);
+    if (match) any = true;
   });
+  table.classList.toggle('dimmed', any);
 }
 /* ============================================================
    NAVEGACIÓN, BÚSQUEDA GLOBAL Y KPIs
    ============================================================ */
 
 let currentView = 'platform';
+
+const VIEW_META = {
+  platform: { title: 'Por e-commerce', desc: 'Empresas registradas en cada plataforma de comercio electrónico.' },
+  company:  { title: 'Por compañía',   desc: 'Presencia de cada razón social a través de las distintas plataformas.' },
+  grupo:    { title: 'Por grupo',      desc: 'Matriz de integración: razón social y tienda por canal e-commerce, agrupada por grupo empresarial.' }
+};
 
 function switchView(view) {
   currentView = view;
@@ -1131,20 +837,22 @@ function switchView(view) {
   document.getElementById('btn-grupo').classList.toggle('active', view === 'grupo');
   document.getElementById('btn-grupo').setAttribute('aria-selected', view === 'grupo');
 
+  document.getElementById('view-title').textContent = VIEW_META[view].title;
+  document.getElementById('view-desc').textContent = VIEW_META[view].desc;
+
   const q = document.getElementById('search').value;
   if (view === 'platform') renderPlatform(q);
   else if (view === 'company') renderCompany(q);
   else {
-    if (!document.getElementById('grupo-tabs').children.length) renderGrupoTabs();
     searchQuery = q;
-    renderIcicle();
+    renderMatrix();
   }
 }
 
 function handleSearch(val) {
   if (currentView === 'platform') renderPlatform(val);
   else if (currentView === 'company') renderCompany(val);
-  else filterMapHighlight(val);
+  else filterMatrixHighlight(val);
 }
 
 function renderHeaderStats() {
@@ -1158,9 +866,9 @@ function renderHeaderStats() {
 }
 
 renderHeaderStats();
-renderGrupoTabs();
 renderPlatform('');
 renderCompany('');
+renderMatrix();
 </script>
 </body>
 </html>
